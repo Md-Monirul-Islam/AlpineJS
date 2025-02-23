@@ -57,6 +57,44 @@
         Message2: <strong x-text="message2"></strong>
     </div>
 
+
+    <!-- x-on -->
+    <div x-data="">
+        <button x-on:click="console.log('Button clicked')">Click me</button>
+        <button @click="console.log('Button clicked')">Click me</button>
+        <button @click="console.log(alert('Button clicked'))">Click me</button>
+        <button @click="alert($event.target.getAttribute('message'))" message="Hello World">Click me</button>
+        <button @click="myFunction()">My Function</button>
+        <button @click="handleClick">Handle Click</button>
+
+        <input type="text" @keyup.enter="alert('Enter key is Pressed')">
+        <input type="text" @keyup.shift.enter="alert('shift and key is Pressed')">
+        <br>
+
+        <br>
+        <form @submit.prevent="console.log('Form Submitted')">
+            <button>Submit</button>
+        </form>
+    </div>
+    <br><br>
+    <div x-data="{count: 0}">
+        <button @click="count++">Increment</button>
+        <button @click="count--">Decrement</button>
+        <p>Count: <span x-text="count"></span></p>
+    </div>
+
+
+    <script>
+        function myFunction() {
+            console.log('Button clicked');
+        }
+
+        function handleClick(e) {
+            console.log('Button clicked');
+            alert('Hi')
+        }
+    </script>
+
 </body>
 
 </html>
