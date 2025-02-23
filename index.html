@@ -1,18 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
-        body{
+        body {
             background-color: black;
-            color: rgb(215,215,215);
+            color: rgb(215, 215, 215);
         }
     </style>
+</head>
+
+
 <body>
-    
+
+    <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
+
+    <!-- x-data -->
+
+    <div x-data></div>
+    <div x-data="{}"></div>
+    <div x-data="{message: 'I ❤️ Alpine'}"></div>
+    <div x-data="{names: ['Munna','Monirul','Adnan']}"></div>
+    <div x-data="{age: 25}"></div>
+    <div x-data="{isActive: false}"></div>
+    <div x-data="{open: false, toggle() {this.open = !this.open}}"></div>
+    <div x-data="{open: false, toggle() {this.open = !this.open}, get isOpen() {return this.open}}"></div>
+    <div x-data="{message1: 'Hello World'}">
+        <div x-data="{message2: 'Bye Alpine'}"></div>
+    </div>
+
+    <!-- x-text -->
+
+    <div x-data="{message: 'Hello Alpine.JS'}">
+        <div x-text="message"></div>
+    </div>
+
+    <div x-data="{value: 5}">
+        <strong x-text="value+2"></strong>
+    </div>
+
+    <div x-data="{open: false, toggle() {this.open = !this.open}}">
+        <button @click="toggle()">Toggle</button>
+        <button @click="toggle">Toggle</button>
+    </div>
+
+    <div x-data="{message1:'Hi, Alpine.js'}">
+        Message1: <strong x-text="message1"></strong>
+    </div>
+
+    <div x-data="{message2:'Bye, Alpine.js'}">
+        Message2: <strong x-text="message2"></strong>
+    </div>
+
 </body>
+
 </html>
