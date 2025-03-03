@@ -83,6 +83,34 @@
         <p>Count: <span x-text="count"></span></p>
     </div>
 
+    <div x-data="{open: false}">
+        <button @click="open = !open">Toggle</button>
+        <strong x-show="open">This is my content</strong>
+    </div>
+
+    <!--x-show-->
+
+    <div x-data="{open: false}">
+        <button @click="open = !open">Transition</button>
+        <p x-show="open" x-transition>This is my content</p>
+    </div>
+
+    <!--x-if-->
+
+    <div x-data="{isVisible:false}">
+        <button @click="isVisible = !isVisible">If Toggle</button>
+        <template x-if="isVisible">
+            <p>This is conditionally rendered.</p>
+        </template>
+    </div>
+
+    <!--x-transition-->
+
+    <div x-data="{open:false}">
+        <button @click="open = !open">Custom Transition</button>
+        <p x-show="open" x-transition:enter.duration.5000ms x-transition:leave.duration.3000ms>This is customize transition</p>
+    </div>
+
 
     <script>
         function myFunction() {
