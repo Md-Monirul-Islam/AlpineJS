@@ -111,6 +111,11 @@
         <p x-show="open" x-transition:enter.duration.5000ms x-transition:leave.duration.3000ms>This is customize transition</p>
     </div>
 
+    <!--x-bind-->
+    <div x-data="{placeholder:'write your name'}">
+        Name: <input type="text" x-bind:placeholder=placeholder name="" id="">
+    </div>
+
 
     <script>
         function myFunction() {
