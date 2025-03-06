@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
@@ -13,7 +17,8 @@
             background-color: black;
             color: rgb(215, 215, 215);
         }
-        .hidden{
+        
+        .hidden {
             display: none;
         }
     </style>
@@ -141,7 +146,7 @@
     </div>
 
     <!--x-for-->
-    
+
     <ul x-data="{colors:['Red','orange','Yellow']}">
         <template x-for="color in colors">
             <li x-text="color"></li>
@@ -236,8 +241,7 @@
     </div>
 
     <div x-data="{message: ''}">
-        Message: <textarea name="" id="" x-model="message"></textarea>
-        Your Message: <span x-text="message"></span>
+        Message: <textarea name="" id="" x-model="message"></textarea> Your Message: <span x-text="message"></span>
     </div>
 
     <div x-data="{show:''}">
@@ -250,14 +254,12 @@
         <input type="checkbox" value="Red" x-model="colors">
         <input type="checkbox" value="Green" x-model="colors">
         <input type="checkbox" value="Blue" x-model="colors">
-        <input type="checkbox" value="Black" x-model="colors">
-        Colors: <span x-text="colors"></span>
+        <input type="checkbox" value="Black" x-model="colors"> Colors: <span x-text="colors"></span>
     </div>
 
     <div x-data="{answer:''}">
         <input type="radio" value="yes" x-model="answer">
-        <input type="radio" value="no" x-model="answer">
-        Answer: <span x-text="answer"></span>
+        <input type="radio" value="no" x-model="answer"> Answer: <span x-text="answer"></span>
     </div>
 
     <div x-data="{color:''}">
@@ -266,8 +268,7 @@
             <option>Red</option>
             <option>Black</option>
             <option>Green</option>
-        </select>
-        Color: <span x-text="color"></span>
+        </select> Color: <span x-text="color"></span>
     </div>
 
     <div x-data="{color:''}">
@@ -275,8 +276,7 @@
             <template x-for="color in ['Red','Green','Red']">
                 <option x-text="color"></option>
             </template>
-        </select>
-        Color: <span x-text="color"></span>
+        </select> Color: <span x-text="color"></span>
     </div>
 
     <div x-data="{range:0.2}">
@@ -306,7 +306,47 @@
         </div>
     </div>
 
+    <!--$root-->
+    <div x-data="" data-message="Hello Munna">
+        <button @click="alert($root.dataset.message)">Say Hello 1</button>
+    </div>
 
+    <!--$watch-->
+    <div x-data="{count: 0}" x-init="$watch('count', value => console.log('Count changed to:',value))">
+        <button @click="count++">Increment</button>
+        <p>Count: <span x-text="count"></span></p>
+    </div>
+
+    <!--$dispatch-->
+    <div x-data="">
+        <div @notify="alert('Hi, Munna')">
+            <button @click="$dispatch('notify')">Notify</button>
+        </div>
+    </div>
+
+    <div x-data="">
+        <div @notify="alert($event.detail.message)">
+            <button @click="$dispatch('notify', { message: 'Hello World' })">Notify 2</button>
+        </div>
+    </div>
+
+    <!--$store-->
+    <div x-data="">
+        <button @click="$store.counter.count++">Increment</button>
+        <strong x-text="$store.counter.count"></strong>
+    </div>
+
+    <!--Async-->
+    <div x-data="">
+        <p x-text="syncFun()"></p>
+        <p x-text="await asyncFun()"></p>
+        <p x-text="await asyncFun"></p>
+    </div>
+
+    <!--Mask Plugins-->
+    <div x-data="">
+        Date: <input type="text" x-mask="99/99/9999" placeholder="MM/DD/YYYY"> price: <input type="text" x-mask:dynamic="$money($input)">
+    </div>
 
 
     <br><br><br>
@@ -324,8 +364,25 @@
             alert('Hi')
         }
 
-        function sayHello({greeting,name}){
+        function sayHello({
+            greeting,
+            name
+        }) {
             alert(greeting + ' ' + name + '!')
+        }
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('counter', {
+                count: 0,
+            })
+        })
+
+        function syncFun() {
+            return 'Hello World!'
+        }
+
+        async function asyncFun() {
+            return 'Hello World!'
         }
     </script>
 
