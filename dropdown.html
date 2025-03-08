@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Menu</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .dropdown-container {
+            position: relative;
+            width: 250px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        .dropdown-button {
+            width: 100%;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        .dropdown-button:hover {
+            border-color: #94a3b8;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        
+        .dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .chevron {
+            transition: transform 0.2s;
+        }
+        
+        .chevron.rotate {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+
+    <div x-data="dropdown()" class="dropdown-container" @click.away="close()">
+        <!-- Button -->
+        <button @click="toggle()" class="dropdown-button">
+            <span x-text="selected"></span>
+            <svg :class="{'rotate': open}" class="chevron w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <!-- Dropdown Options -->
+        <div x-show="open" class="dropdown-content mt-2 shadow-md" x-transition>
+            <template x-for="option in options" :key="option">
+                <div @click="select(option)" class="dropdown-item" x-text="option"></div>
+            </template>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('dropdown', () => ({
+                open: false,
+                selected: 'Select an option',
+                options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+
+                toggle() {
+                    this.open = !this.open;
+                },
+                close() {
+                    this.open = false;
+                },
+                select(option) {
+                    this.selected = option;
+                    this.open = false;
+                    console.log('Selected option:', option);
+                }
+            }));
+        });
+    </script>
+
+</body>
+
+</html>
