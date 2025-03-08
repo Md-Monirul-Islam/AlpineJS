@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Animated Modal</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        /* General Styles */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        /* Open Button */
+        
+        .open-modal-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .open-modal-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.5);
+        }
+        /* Modal Overlay */
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Modal Box */
+        
+        .modal {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-30px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        /* Modal Header */
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.4rem;
+            color: #333;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff5e57;
+            transition: 0.3s;
+        }
+        
+        .close-button:hover {
+            transform: scale(1.2);
+        }
+        /* Modal Content */
+        
+        .modal-content {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        /* Modal Footer */
+        
+        .modal-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        /* Buttons */
+        
+        .button {
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, #3b82f6, #4c51bf);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .primary-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .secondary-button {
+            background: #e5e7eb;
+            border: 1px solid #d1d5db;
+            color: #333;
+        }
+        
+        .secondary-button:hover {
+            background: #d1d5db;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div x-data="{ isOpen: false }">
+        <!-- Trigger Button -->
+        <button class="open-modal-button" @click="isOpen = true">Open Modal</button>
+
+        <!-- Modal -->
+        <template x-teleport="body">
+            <div x-show="isOpen"
+                x-transition.opacity
+                class="modal-overlay"
+                x-bind:class="{'active': isOpen}"
+                @click="isOpen = false">
+                
+                <div class="modal" @click.stop>
+                    <div class="modal-header">
+                        <h2>Beautiful Modal</h2>
+                        <button class="close-button" @click="isOpen = false">&times;</button>
+                    </div>
+
+                    <div class="modal-content">
+                        <p>Enhance your UI with a beautifully designed modal.</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="secondary-button" @click="isOpen = false">Cancel</button>
+                        <button class="primary-button" @click="isOpen = false">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</body>
+
+</html>
