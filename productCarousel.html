@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Carousel</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <style>
+        .carousel-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel {
+            position: relative;
+        }
+
+        .carousel-items {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            flex: 0 0 calc(33.33% - 1rem); /* Adjusted for 3 products per row */
+            padding: 1rem;
+            margin: 0.5rem;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px; /* Fixed height */
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        .product-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-button:hover {
+            background: #f3f4f6;
+        }
+
+        .prev-button {
+            left: -20px;
+        }
+
+        .next-button {
+            right: -20px;
+        }
+
+        .button-disable {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="carousel-container" x-data="carousel()">
+        <div class="carousel">
+            <button @click="prev()" class="carousel-button prev-button" 
+                x-bind:class="{'button-disable': currentSlide === 0}" 
+                x-bind:disabled="currentSlide === 0">
+                &#10094;
+            </button>
+            
+            <div class="carousel-items" 
+                :style="`transform: translateX(-${currentSlide * (itemWidth + margin)}px)`">
+                <template x-for="product in products" :key="product.id">
+                    <div class="product-card">
+                        <img :src="product.image" alt="" class="product-image">
+                        <h3 class="product-title" x-text="product.title"></h3>
+                        <h3 class="product-price" x-text="product.price"></h3>
+                    </div>
+                </template>
+            </div>
+
+            <button @click="next()" class="carousel-button next-button" 
+                x-bind:class="{'button-disable': currentSlide >= maxSlides}" 
+                x-bind:disabled="currentSlide >= maxSlides">
+                &#10095;
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('carousel', () => ({
+                currentSlide: 0,
+                slidesToShow: 3,
+                itemWidth: 290, // Adjusted to match card size
+                margin: 16, // Margin between items
+                products: [
+                    { id: 1, title: "Product 1", image: 'images/img1.jpeg', price: 'BDT 5000' },
+                    { id: 2, title: "Product 2", image: 'images/img2.jpeg', price: 'BDT 5500' },
+                    { id: 3, title: "Product 3", image: 'images/img3.jpeg', price: 'BDT 6000' },
+                    { id: 4, title: "Product 4", image: 'images/img1.jpeg', price: 'BDT 6200' },
+                    { id: 5, title: "Product 5", image: 'images/img2.jpeg', price: 'BDT 6500' }
+                ],
+                get maxSlides() {
+                    return this.products.length - this.slidesToShow;
+                },
+                next() {
+                    if (this.currentSlide < this.maxSlides) {
+                        this.currentSlide++;
+                    }
+                },
+                prev() {
+                    if (this.currentSlide > 0) {
+                        this.currentSlide--;
+                    }
+                }
+            }));
+        });
+    </script>
+
+</body>
+</html>
