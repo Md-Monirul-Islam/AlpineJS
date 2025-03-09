@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js Accordion</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .accordion {
+            max-width: 600px;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .accordion-header {
+            padding: 1rem;
+            background-color: #f9fafb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #f3f4f6;
+        }
+        .accordion-content {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .accordion-content.open {
+            padding: 1rem;
+            max-height: 200px;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-icon.open {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="accordion" x-data="{ activeAccordion: null }">
+        <!-- Accordion Item 1 -->
+        <div class="accordion-item">
+            <div class="accordion-header" @click="activeAccordion = activeAccordion === 1 ? null : 1">
+                <span>What is Alpine.js?</span>
+                <svg class="accordion-icon" :class="{'open': activeAccordion === 1}" width="16" height="16" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8 12L2 6h12z" />
+                </svg>
+            </div>
+            <div class="accordion-content" x-ref="content1" :style="activeAccordion === 1 ? 'max-height: 200px; padding: 1rem;' : ''">
+                Alpine.js is a rugged, minimal framework for composing JavaScript behavior in your markup. It's like Tailwind for JavaScript.
+            </div>
+        </div>
+
+        <!-- Accordion Item 2 -->
+        <div class="accordion-item">
+            <div class="accordion-header" @click="activeAccordion = activeAccordion === 2 ? null : 2">
+                <span>Why use Alpine.js?</span>
+                <svg class="accordion-icon" :class="{'open': activeAccordion === 2}" width="16" height="16" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8 12L2 6h12z" />
+                </svg>
+            </div>
+            <div class="accordion-content" x-ref="content2" :style="activeAccordion === 2 ? 'max-height: 200px; padding: 1rem;' : ''">
+                Currently, it is the best JavaScript framework to work with small projects like static websites. As it’s only 6.4kb zipped, it doesn’t add much to the overall size of your project. So, it’s good for static websites to keep the page load time minimum for a good user experience.
+            </div>
+        </div>
+
+        <!-- Accordion Item 3 -->
+        <div class="accordion-item">
+            <div class="accordion-header" @click="activeAccordion = activeAccordion === 3 ? null : 3">
+                <span>How does it work?</span>
+                <svg class="accordion-icon" :class="{'open': activeAccordion === 3}" width="16" height="16" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8 12L2 6h12z" />
+                </svg>
+            </div>
+            <div class="accordion-content" x-ref="content3" :style="activeAccordion === 3 ? 'max-height: 200px; padding: 1rem;' : ''">
+                Alpine.js focuses on using directives in your HTML, which improves readability and makes your code more self-explanatory. These directives, such as <code>x-show</code>, <code>x-if</code>, and <code>x-for</code>, allow you to control DOM elements based on data without the need for JavaScript manipulations.
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
