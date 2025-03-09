@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Carousel (Alpine.js)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+
+    <div x-data="{ 
+            images: [
+                'images/img1.jpeg',
+                'images/img2.jpeg',
+                'images/img3.jpeg',
+            ],
+            currentIndex: 0,
+            autoSlide() {
+                setInterval(() => {
+                    this.nextImage();
+                }, 5000); // Auto-slide every 3 seconds
+            },
+            nextImage() {
+                this.currentIndex = (this.currentIndex + 1) % this.images.length;
+            },
+            prevImage() {
+                this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+            }
+        }" 
+        x-init="autoSlide()"
+        class="w-full max-w-4xl">
+        
+        <!-- Carousel -->
+        <div class="relative">
+            <img :src="images[currentIndex]" 
+                 class="w-full h-96 object-cover rounded-lg shadow-lg transition duration-500 ease-in-out">
+            
+            <!-- Prev Button -->
+            <button @click="prevImage" 
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-full hover:bg-gray-700">
+                ◀
+            </button>
+            
+            <!-- Next Button -->
+            <button @click="nextImage" 
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-full hover:bg-gray-700">
+                ▶
+            </button>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="flex justify-center gap-2 mt-4">
+            <template x-for="(image, index) in images" :key="image">
+                <img :src="image" 
+                     @click="currentIndex = index" 
+                     class="w-24 h-16 object-cover rounded-lg cursor-pointer border-2"
+                     :class="currentIndex === index ? 'border-blue-500' : 'border-gray-300'">
+            </template>
+        </div>
+
+    </div>
+
+</body>
+</html>

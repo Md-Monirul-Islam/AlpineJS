@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Alpine.js</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+
+    <div x-data="{ 
+            images: [
+                'images/img1.jpeg',
+                'images/img2.jpeg',
+                'images/img3.jpeg'
+            ],
+            currentImage: 'images/img1.jpeg' // Set default image
+        }" 
+        class="w-full max-w-4xl">
+        
+        <!-- Main Image Display -->
+        <div class="relative">
+            <img :src="currentImage" 
+                 class="w-full h-96 object-cover rounded-lg shadow-lg transition duration-300">
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="flex justify-center gap-2 mt-4">
+            <template x-for="image in images" :key="image">
+                <img :src="image" 
+                     @click="currentImage = image" 
+                     class="w-24 h-16 object-cover rounded-lg cursor-pointer hover:opacity-75 transition duration-300">
+            </template>
+        </div>
+
+    </div>
+
+</body>
+</html>
