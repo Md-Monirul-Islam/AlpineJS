@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Rating</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm" x-data="{ rating: 0 }">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Rate this product</h1>
+
+        <!-- Star rating -->
+        <div class="flex items-center justify-center gap-2 mb-4">
+            <template x-for="star in 5" :key="star">
+                <svg @click="rating = star" :class="{'text-yellow-400': rating >= star, 'text-gray-300': rating < star}" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 cursor-pointer transition duration-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 3.316a1 1 0 011.902 0l1.286 3.953a1 1 0 00.95.69h4.18a1 1 0 01.592 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.954a1 1 0 01-1.54 1.118l-3.385-2.46a1 1 0 00-1.176 0l-3.385 2.46a1 1 0 01-1.54-1.118l1.287-3.954a1 1 0 00-.364-1.118L2.04 9.769a1 1 0 01.592-1.81h4.18a1 1 0 00.95-.69l1.286-3.953z" />
+                </svg>
+            </template>
+        </div>
+
+        <!-- Display rating -->
+        <p class="text-center text-lg text-gray-600">
+            You rated: <span class="font-semibold text-gray-800" x-text="rating || '0'"></span>
+        </p>
+    </div>
+    
+</body>
+</html>
