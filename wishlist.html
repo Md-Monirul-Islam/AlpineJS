@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Wishlist</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-8">
+    <div x-data="wishlistData">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">Featured Products</h1>
+
+            <!-- Product grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="product in products" :key="product.id">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden relative">
+                        <!-- Product image -->
+                        <img :src="product.image" :alt="product.name" class="w-full h-48 object-cover">
+
+                        <!-- Wishlist button -->
+                        <button @click="toggleWishlist(product)" class="absolute top-4 right-4 h-10 w-10 bg-white rounded-full shadow-md flex items-center justify-center transition-colors duration-200" :class="{'bg-red-500': product.inWishlist}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-700" :class="{'text-white': product.inWishlist}">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.25c0-3.75 3.24-6 6.75-6 2.1 0 3.93 1.29 4.75 3.15.82-1.86 2.65-3.15 4.75-3.15 3.51 0 6.75 2.25 6.75 6 0 4.5-6.75 8.25-9 10.5-2.25-2.25-9-6-9-10.5z" />
+                            </svg>
+                        </button>
+
+                        <!-- Product details -->
+                        <div class="p-4">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2" x-text="product.name"></h2>
+                            <p class="text-gray-600 font-medium">BDT <span x-text="product.price"></span></p>
+
+                            <!-- Add to cart button -->
+                            <button class="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Add to Cart</button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Wishlist summary -->
+            <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Wishlist</h2>
+                <ul class="space-y-4" x-show="wishlist.length > 0">
+                    <template x-for="item in wishlist" :key="item.id">
+                        <li class="flex items-center justify-between">
+                            <span class="text-gray-700" x-text="item.name"></span>
+                            <span class="font-medium text-gray-900">BDT <span x-text="item.price"></span></span>
+                        </li>
+                    </template>
+                </ul>
+                <p class="text-gray-500" x-show="wishlist.length === 0">Your wishlist is empty.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('wishlistData', () => ({
+                products: [{
+                    id: 1,
+                    name: 'Wireless Headphones',
+                    price: '99.99',
+                    image: 'images/img1.jpeg',
+                    inWishlist: false
+                }, {
+                    id: 2,
+                    name: 'Watch',
+                    price: '200.00',
+                    image: 'images/img2.jpeg',
+                    inWishlist: false
+                }, {
+                    id: 3,
+                    name: 'Smart Phone',
+                    price: '399.99',
+                    image: 'images/img3.jpeg',
+                    inWishlist: false
+                }],
+                get wishlist() {
+                    return this.products.filter(product => product.inWishlist);
+                },
+                toggleWishlist(product) {
+                    product.inWishlist = !product.inWishlist;
+                },
+            }));
+        });
+    </script>
+</body>
+
+</html>
