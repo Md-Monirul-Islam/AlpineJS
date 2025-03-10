@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating System</title>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div x-data="thumbsRating()" class="bg-white shadow-lg rounded-lg p-6 text-center w-80">
+        <h1 class="text-xl font-bold text-gray-800 mb-4">Rate this!</h1>
+
+        <div class="flex justify-center items-center space-x-6">
+            <!-- Thumbs Up Button -->
+            <button 
+                class="text-gray-500 hover:text-green-500 text-4xl transition duration-200"
+                @click="rate('up')">
+                👍
+            </button>
+
+            <!-- Thumbs Down Button -->
+            <button 
+                class="text-gray-500 hover:text-red-500 text-4xl transition duration-200"
+                @click="rate('down')">
+                👎
+            </button>
+        </div>
+
+        <!-- Selected Rating Feedback -->
+        <p class="mt-4 text-gray-700 font-medium" x-text="feedbackMessage"></p>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('thumbsRating', () => ({
+                rating: null,
+                rate(option) {
+                    this.rating = option;
+                },
+                get feedbackMessage() {
+                    if (this.rating === 'up') {
+                        return 'You gave a thumbs up! 👍';
+                    } else if (this.rating === 'down') {
+                        return 'You gave a thumbs down! 👎';
+                    }
+                    return 'Select a rating above.';
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
